@@ -53,7 +53,7 @@ export class ApiResponse {
 export class Api {
   constructor(
     private readonly server: Server,
-    private readonly authorization: string | undefined = basicAuthorization(RECEPTIONIST.username, RECEPTIONIST.password),
+    private readonly authorization: string | null = basicAuthorization(RECEPTIONIST.username, RECEPTIONIST.password),
   ) {}
 
   as(user: TestUser): Api {
@@ -65,7 +65,7 @@ export class Api {
   }
 
   anonymous(): Api {
-    return new Api(this.server, undefined);
+    return new Api(this.server, null);
   }
 
   get(path: string): Promise<ApiResponse> {
@@ -89,7 +89,7 @@ export class Api {
     let call =
       method === 'GET' ? agent.get(path) : method === 'POST' ? agent.post(path) : method === 'PUT' ? agent.put(path) : agent.delete(path);
     call = call.set('Accept', 'application/json, application/problem+json').buffer(true);
-    if (this.authorization !== undefined) {
+    if (this.authorization !== null) {
       call = call.set('Authorization', this.authorization);
     }
     if (body !== undefined) {
