@@ -8,6 +8,8 @@ Testes: `test/missions/api-security.spec.ts`. Para rodar só esta missão: `npm 
 
 A segurança lê os usuários de um arquivo JSON indicado pela variável de ambiente `CLINIC_SECURITY_USERS_FILE`. O caminho pode ser absoluto ou relativo à raiz do projeto (a pasta de onde a aplicação e os testes rodam). O arquivo tem a lista `users`, com itens de `username`, `password` (em texto puro) e `role`. Os papéis são `RECEPTIONIST` e `PROFESSIONAL`.
 
+Sem `CLINIC_SECURITY_USERS_FILE` definida (por exemplo, no `npm start` fora dos testes), a aplicação sobe normalmente, escreve um aviso no log e recusa todas as requisições à API com `401 Unauthorized`; `GET /health` continua público.
+
 Nos testes, o setup do Jest (`test/support/global-setup.ts`) define `CLINIC_SECURITY_USERS_FILE=test/config/security-users.json`. Use esse arquivo, sem alterá-lo. Todos os testes do projeto se autenticam com esses usuários:
 
 ```json
