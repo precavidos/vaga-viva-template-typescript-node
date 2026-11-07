@@ -1,0 +1,6 @@
+{
+  "users": [
+    { "username": "recepcao", "password": "recepcao-senha", "role": "RECEPTIONIST" },
+    { "username": "dra.helena", "password": "profissional-senha", "role": "PROFESSIONAL" }
+  ]
+}

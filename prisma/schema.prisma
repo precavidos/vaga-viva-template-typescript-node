@@ -1,0 +1,30 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Professional {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(120)
+  specialty    String        @db.VarChar(80)
+  appointments Appointment[]
+
+  @@map("professionals")
+}
+
+model Appointment {
+  id              Int          @id @default(autoincrement())
+  professionalId  Int          @map("professional_id")
+  patientId       Int          @map("patient_id")
+  startsAt        DateTime     @map("starts_at") @db.Timestamp(6)
+  durationMinutes Int          @map("duration_minutes")
+  professional    Professional @relation(fields: [professionalId], references: [id])
+
+  @@index([professionalId, startsAt])
+  @@map("appointments")
+}
