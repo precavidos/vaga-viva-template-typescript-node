@@ -1,0 +1,36 @@
+# Workflow do Vaga Viva: roda os testes e publica o relatório JUnit para o revisor de PR.
+# Não faz parte de nenhuma missão; não altere este arquivo.
+name: Vaga Viva
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Dependências
+        run: npm ci
+
+      - name: Testes
+        run: npm test
+
+      - name: Relatório JUnit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: reports/junit.xml
+          if-no-files-found: ignore
