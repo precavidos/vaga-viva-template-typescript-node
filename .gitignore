@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+reports/
+src/generated/
+
+### IDEs ###
+.idea/
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Environment ###
+.env
